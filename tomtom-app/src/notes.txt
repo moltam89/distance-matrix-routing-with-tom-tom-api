@@ -1,1 +1,4 @@
 navigacio gomb lenyomasara
+
+20:00 Add a Marker to the Map
+26:05 Making the Marker Draggable
