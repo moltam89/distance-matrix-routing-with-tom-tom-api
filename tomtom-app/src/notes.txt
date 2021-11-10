@@ -2,3 +2,9 @@ navigacio gomb lenyomasara
 
 20:00 Add a Marker to the Map
 26:05 Making the Marker Draggable
+
+
+Hazi:
+Adding Multiple Delivery Points and Calculating the shortest route
+
+https://www.youtube.com/watch?v=43jfFU4FJZo&t=1866s

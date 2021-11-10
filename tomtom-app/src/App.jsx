@@ -8,6 +8,8 @@ let APP_KEY = "3ovwP0g2CzgNMyc7QtYqn6JuOHtaESTC";
 
 const App = () => {
   const [map, setMap] = useState({});
+  const [zoom, setZoom] = useState(8);
+
   const [lat, setLat] = useState("47.4979");
   const [lng, setLng] = useState("19.0402");
 
@@ -25,6 +27,8 @@ const App = () => {
       }
   }
 
+  
+
   useEffect(() => {
       let map = tt.map({
         key: APP_KEY,
@@ -33,13 +37,18 @@ const App = () => {
           trafficIncidents: true,
           trafficFlow: true,
         },
-        zoom: 8,
+        zoom: zoom,
         center: {lat, lng}, 
       }); 
 
       setMap(map);
 
+
+
       const addMarker = () => {
+        const popupOffsets = {bottom: [0, -50]};
+        const popup = new tt.Popup({offset: popupOffsets}).setHTML("<b> Here I am");
+
         const element = document.createElement('div')
         element.className = 'marker'
 
@@ -51,10 +60,14 @@ const App = () => {
           .addTo(map)
         
         marker.on('dragend', () => {
-          const lngLat = marker.getLngLat()
-          setLng(lngLat.lng)
-          setLat(lngLat.lat)
+          const lngLat = marker.getLngLat();
+          setLng(lngLat.lng);
+          setLat(lngLat.lat);
+          setZoom(map.getZoom());
         })
+
+        marker.setPopup(popup);
+
       }
       addMarker();
 
@@ -62,7 +75,7 @@ const App = () => {
         map.remove()
       }
 
-    }, [lat, lng] );
+    }, [lat, lng, zoom] );
 
   return (
       <div className="app">
