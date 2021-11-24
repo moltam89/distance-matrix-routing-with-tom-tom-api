@@ -23,6 +23,45 @@ const App = () => {
   const latElement = useRef();
   const lngElement = useRef();
 
+  const addDeliveryMarker = (lngLat, map) => {
+    const element = document.createElement('div')
+    element.className = 'marker-delivery'
+    new tt.Marker({
+      element: element
+    })
+    .setLngLat(lngLat)
+    .addTo(map)
+  }
+
+  const convertToPoints = (lngLat) => {
+    return {
+      point: {
+        latitude: lngLat.lat,
+        longitude: lngLat.lng
+      }
+    }
+  }
+
+  const drawRoute = (geoJson, map) => {
+    if (map.getLayer('route')) {
+      map.removeLayer('route')
+      map.removeSource('route')
+    }
+    map.addLayer({
+      id: 'route',
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: geoJson
+      },
+      paint: {
+        'line-color': '#4a90e2',
+        'line-width': 6
+  
+      }
+    })
+  }
+
   const goThere = (currentLat, currentLng) => {
       if (!currentLat && !currentLng) {
         currentLat = latElement.current.value
@@ -36,6 +75,12 @@ const App = () => {
   }
 
   useEffect(() => {
+      const destinations = [];
+      const origin = {
+        lng: lng,
+        lat: lat,
+      }
+
       let map = tt.map({
         key: APP_KEY,
         container: mapElement.current,
@@ -78,10 +123,70 @@ const App = () => {
       }
       addMarker();
 
+    const sortDestinations = (locations) => {
+      const pointsForDestinations = locations.map((destination) => {
+        return convertToPoints(destination)
+      })
+      const callParameters = {
+        key: APP_KEY,
+        destinations: pointsForDestinations,
+        origins: [convertToPoints(origin)],
+      }
+
+    return new Promise((resolve, reject) => {
+      ttapi.services
+        .matrixRouting(callParameters)
+        .then((matrixAPIResults) => {
+          const results = matrixAPIResults.matrix[0]
+          const resultsArray = results.map((result, index) => {
+            return {
+              location: locations[index],
+              drivingtime: result.response.routeSummary.travelTimeInSeconds,
+            }
+          })
+          resultsArray.sort((a, b) => {
+            return a.drivingtime - b.drivingtime
+          })
+          const sortedLocations = resultsArray.map((result) => {
+            return result.location
+          })
+          resolve(sortedLocations)
+        })
+      })
+    }
+
+    const recalculateRoutes = () => {
+      sortDestinations(destinations).then((sorted) => {
+        sorted.unshift(origin)
+
+        ttapi.services
+          .calculateRoute({
+            key: "3ovwP0g2CzgNMyc7QtYqn6JuOHtaESTC",
+            locations: sorted,
+          })
+          .then((routeData) => {
+            const geoJson = routeData.toGeoJson()
+            drawRoute(geoJson, map)
+        })
+      })
+    }
+
+
+
+
+
+
       document.getElementById("anchorId").addEventListener('click', event => {
           goThere(LONDON_LAT, LONDON_LNG);
         }, false
       );
+
+      map.on('click', (e) => {
+        console.log(e);
+        destinations.push(e.lngLat);
+        addDeliveryMarker(e.lngLat, map);
+        recalculateRoutes();
+      })
 
       return () => {
         map.remove()
