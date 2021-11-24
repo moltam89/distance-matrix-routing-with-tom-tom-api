@@ -35,8 +35,6 @@ const App = () => {
       }
   }
 
-  
-
   useEffect(() => {
       let map = tt.map({
         key: APP_KEY,
@@ -50,8 +48,6 @@ const App = () => {
       }); 
 
       setMap(map);
-
-
 
       const addMarker = () => {
         const popupOffsets = {bottom: [0, -50]};
