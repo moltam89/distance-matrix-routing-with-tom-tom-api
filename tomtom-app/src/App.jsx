@@ -4,6 +4,8 @@ import * as ttapi from '@tomtom-international/web-sdk-services'
 import './App.css'
 import '@tomtom-international/web-sdk-maps/dist/maps.css'
 
+import GoThere from './GoThere.jsx'
+
 let APP_KEY = "3ovwP0g2CzgNMyc7QtYqn6JuOHtaESTC";
 
 const BUDAPEST_LAT = "47.4979";
@@ -137,6 +139,7 @@ const App = () => {
       ttapi.services
         .matrixRouting(callParameters)
         .then((matrixAPIResults) => {
+          console.log("matrixAPIResults", matrixAPIResults);
           const results = matrixAPIResults.matrix[0]
           const resultsArray = results.map((result, index) => {
             return {
@@ -161,7 +164,7 @@ const App = () => {
 
         ttapi.services
           .calculateRoute({
-            key: "3ovwP0g2CzgNMyc7QtYqn6JuOHtaESTC",
+            key: APP_KEY,
             locations: sorted,
           })
           .then((routeData) => {
@@ -196,6 +199,8 @@ const App = () => {
 
   return (
       <div className="app">
+        <GoThere />
+
         <input ref={latElement} id="lat" placeholder="latitude" type="text" data-id="latitude"/>
         <input ref={lngElement} id="lng" placeholder="longitude" type="text" data-id="longitude"/>
         <button onClick={goThere}>
