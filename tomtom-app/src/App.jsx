@@ -22,8 +22,13 @@ const App = () => {
   const [lng, setLng] = useState(BUDAPEST_LNG);
 
   const mapElement = useRef();
-  const latElement = useRef();
-  const lngElement = useRef();
+
+  const goThere = (currentLat, currentLng) => {
+    if (currentLat && currentLng) {
+      setLat(currentLat);
+      setLng(currentLng);
+    }
+  }
 
   const addDeliveryMarker = (lngLat, map) => {
     const element = document.createElement('div')
@@ -64,17 +69,7 @@ const App = () => {
     })
   }
 
-  const goThere = (currentLat, currentLng) => {
-      if (!currentLat && !currentLng) {
-        currentLat = latElement.current.value
-        currentLng = lngElement.current.value
-      }
 
-      if (currentLat && currentLng) {
-        setLat(currentLat);
-        setLng(currentLng);
-      }
-  }
 
   useEffect(() => {
       const destinations = [];
@@ -174,11 +169,6 @@ const App = () => {
       })
     }
 
-
-
-
-
-
       document.getElementById("anchorId").addEventListener('click', event => {
           goThere(LONDON_LAT, LONDON_LNG);
         }, false
@@ -199,13 +189,9 @@ const App = () => {
 
   return (
       <div className="app">
-        <GoThere />
-
-        <input ref={latElement} id="lat" placeholder="latitude" type="text" data-id="latitude"/>
-        <input ref={lngElement} id="lng" placeholder="longitude" type="text" data-id="longitude"/>
-        <button onClick={goThere}>
-          Go!
-        </button>
+        <GoThere 
+          goThere ={goThere}
+        />
 
         <div ref={mapElement} className="map"> </div>
       </div> 
