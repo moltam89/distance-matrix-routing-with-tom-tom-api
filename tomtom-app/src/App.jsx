@@ -3,6 +3,7 @@ import * as tt from '@tomtom-international/web-sdk-maps'
 import * as ttapi from '@tomtom-international/web-sdk-services'
 import './App.css'
 import '@tomtom-international/web-sdk-maps/dist/maps.css'
+import { validationLatitudeLongitude } from "validation-latitude-longitude";
 
 import GoThere from './GoThere.jsx'
 

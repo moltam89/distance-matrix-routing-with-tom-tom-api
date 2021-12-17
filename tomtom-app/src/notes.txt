@@ -14,3 +14,7 @@ https://www.youtube.com/watch?v=43jfFU4FJZo&t=1866s
 Hazi:
 Inputuk es go button kulon mreakt komponensbe valo kiszervezese
 Tobbi video lecsekkolasa, kovetkezo projekt keresese
+
+Hazi:
+Bootstrap Validation
+? npm packages
