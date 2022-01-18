@@ -26,8 +26,15 @@ const App = () => {
 
   const goThere = (currentLat, currentLng) => {
     if (currentLat && currentLng) {
-      setLat(currentLat);
-      setLng(currentLng);
+      console.log("Validating:", currentLat, currentLng);
+
+      if (validationLatitudeLongitude.latLong(currentLat, currentLng)) { 
+        setLat(currentLat);
+        setLng(currentLng);
+      }
+      else {
+        console.log("Lat/long is not valid");
+      }
     }
   }
 
