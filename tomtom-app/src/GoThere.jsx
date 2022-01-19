@@ -1,21 +1,39 @@
-import { useRef } from 'react';
+import { useState } from 'react';
+import LatLongValidatedInput from './LatLongValidatedInput.jsx'
 
 const GoThere = ({goThere}) => {
 
-  const latElement = useRef();
-  const lngElement = useRef();
+  const [lat, setLat] = useState({});
+  const [lng, setLng] = useState({});
 
   const go = () => {
-    goThere(latElement.current.value, lngElement.current.value);
+    goThere(lat, lng);
   }
+
+  const setLatValidatedInput = (value) => {
+    setLat(value);
+  }
+
+  const setLngValidatedInput = (value) => {
+    setLng(value);
+  }
+
 
 	return (
 		<div>
-			<input ref={latElement} id="lat" placeholder="latitude" type="text" data-id="latitude"/>
-        <input ref={lngElement} id="lng" placeholder="longitude" type="text" data-id="longitude"/>
-        <button onClick={go}>
-          Go!
-        </button>
+      <LatLongValidatedInput 
+          placeholder ={"Latitude"}
+          parentComponentFunction ={setLatValidatedInput}
+       />
+
+      <LatLongValidatedInput 
+          placeholder ={"Longtitude"}
+          parentComponentFunction ={setLngValidatedInput}
+       />
+
+      <button onClick={go}>
+        Go!
+      </button>
 		</div>
 
 	);
