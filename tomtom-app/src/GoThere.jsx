@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import LatLongValidatedInput from './LatLongValidatedInput.jsx'
+//import { LatLongValidatedInput as LatLongValidatedInput } from "latlongvalidatedinputreact";
 
 const GoThere = ({goThere}) => {
 

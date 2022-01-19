@@ -6991,10 +6991,10 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
-latlongvalidatedinputreact@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/latlongvalidatedinputreact/-/latlongvalidatedinputreact-1.0.0.tgz#c5bb4d23fc4f5575ca64daf0580d992858ee6088"
-  integrity sha512-3lsyQFepIYB84WkNxMG4pLb8PxapKHimSu3u6cYC5+ILVaJF8icQG9c2qLqf8jAvm5iAzo8BphPtkNUA6n/+qg==
+latlongvalidatedinputreact@^1.0.3:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/latlongvalidatedinputreact/-/latlongvalidatedinputreact-1.0.2.tgz#f0bdc4dc4afea57ac9816c42326e3d4b3af014b4"
+  integrity sha512-dFhQkUWraBuTsvraX0cAbq/FdV0r7TaETTdPlgusi76MAyAabNtDskb0xAqWg5jXlQH8eLYVlRtUoLwZx9E8RQ==
   dependencies:
     validation-latitude-longitude "^1.1.3"
 
