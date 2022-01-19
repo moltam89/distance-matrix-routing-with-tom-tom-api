@@ -6,6 +6,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css'
 import { validationLatitudeLongitude } from "validation-latitude-longitude";
 
 import GoThere from './GoThere.jsx'
+import LatLongValidatedInput from './LatLongValidatedInput.jsx'
 
 let APP_KEY = "3ovwP0g2CzgNMyc7QtYqn6JuOHtaESTC";
 
@@ -26,8 +27,6 @@ const App = () => {
 
   const goThere = (currentLat, currentLng) => {
     if (currentLat && currentLng) {
-      console.log("Validating:", currentLat, currentLng);
-
       if (validationLatitudeLongitude.latLong(currentLat, currentLng)) { 
         setLat(currentLat);
         setLng(currentLng);
